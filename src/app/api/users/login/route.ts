@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     const reqBody = await request.json();
     const { email, password } = reqBody;
     console.log(reqBody);
-    // check user is exissts
+    // check user is exists
     const user = await User.findOne({ email });
     if (!user) {
       return NextResponse.json(
@@ -22,10 +22,10 @@ export async function POST(request: NextRequest) {
     //check valid password
     const validPassword = await bcryptjs.compare(password, user.password);
     if (!validPassword) {
-      return NextResponse.json({ error: "Invaild Password" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid Password" }, { status: 400 });
     }
 
-    //check verifed user
+    //check verified user
     if (user.isVerified === false) {
       return NextResponse.json({ error: "user not verified" }, { status: 400 });
     }
